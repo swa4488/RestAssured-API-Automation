@@ -2,8 +2,6 @@ package test;
 
 import java.lang.reflect.Method;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.specification.RequestSpecification;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -19,8 +17,8 @@ import clients.models.response.BasicAuthResponse;
 
 public class ApiTest {
 
-	protected static ExtentReports report;
-	static ExtentTest extentTest = null;
+	private static ExtentReports report;
+	private static ExtentTest extentTest = null;
 	
 	@BeforeSuite()
 	public static void initializeExtentReport(){
@@ -34,7 +32,7 @@ public class ApiTest {
 	}
 
 	@AfterMethod
-	public void getResult(ITestResult result) throws Exception{
+	public void getResult(ITestResult result){
 		if(result.getStatus() == ITestResult.FAILURE){
 			extentTest.log(LogStatus.FAIL, "Test Case Failed is "+result.getName());
 			extentTest.log(LogStatus.FAIL, "Test Case Failed is "+result.getThrowable());
@@ -61,4 +59,5 @@ public class ApiTest {
 		BasicAuthResponse response = apiAction.getBasicPostman("/basic-auth");
 		extentTest.log(LogStatus.INFO,"API Test",response.toString());
 	}
+
 }
